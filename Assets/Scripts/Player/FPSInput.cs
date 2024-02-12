@@ -6,7 +6,6 @@ using UnityEngine;
 [AddComponentMenu("Control Script/FPS Input")]
 public class FPSInput : MonoBehaviour
 {
-
     public float speed = 6.0f;
     public float gravity = -9.8f;
     private CharacterController charController;
@@ -20,18 +19,7 @@ public class FPSInput : MonoBehaviour
         float deltaZ = Input.GetAxis("Vertical") * speed;
         Vector3 movement = new Vector3(deltaX, 0, deltaZ);
         movement = Vector3.ClampMagnitude(movement, speed);
-
-        if (charController.isGrounded) // Check if the character is grounded
-        {
-            // If grounded, don't apply gravity to the y-component
-            movement.y = 0;
-        }
-        else
-        {
-            // If not grounded, apply gravity to the y-component
-            movement.y += gravity * Time.deltaTime;
-        }
-
+        movement.y = gravity;
         movement *= Time.deltaTime;
         movement = transform.TransformDirection(movement);
         charController.Move(movement);
